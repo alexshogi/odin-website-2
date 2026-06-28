@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@font-face {
+  font-family: 'RexBold';
+  src: local('RexBold'), url(~/assets/fonts/RexBold.otf) format('opentype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geometria';
+  src: local('Geometria'), url(~/assets/fonts/Geometria.ttf) format('truetype');
+  font-display: swap;
+}
+
+@theme {
+  --breakpoint-sm: 30rem;
+}
+
+@layer base {
+  html {
+    /* Включает плавную анимацию прокрутки для всего сайта */
+    scroll-behavior: smooth;
+
+    /* Опционально: делает отступ сверху, чтобы шапка не перекрывала заголовок секции при докрутке */
+    scroll-padding-top: 80px; 
+  }
+}
+
+:root {
+  --ui-primary: var(--color-red-600);
+}
+
+body,
+html {
+  font-family: Geometria, Lato, "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
+}
+
+.dark {
+  --ui-primary: var(--color-red-400);
+  --ui-bg: #1b1718;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: RexBold;
+}

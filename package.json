@@ -1,0 +1,35 @@
+{
+  "name": "odin-website-2",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/icon": "^2.2.2",
+    "@nuxt/image": "^2.0.0",
+    "@nuxt/ui": "^4.8.1",
+    "@nuxtjs/device": "^4.0.0",
+    "@nuxtjs/robots": "^6.0.9",
+    "@nuxtjs/sitemap": "^8.0.15",
+    "@takumi-rs/core": "^1.6.0",
+    "@unhead/vue": "^3.1.1",
+    "@vueuse/nuxt": "^14.3.0",
+    "maska": "^3.2.0",
+    "nuxt": "^4.4.6",
+    "nuxt-og-image": "^6.5.1",
+    "nuxt-swiper": "^2.0.2",
+    "tailwindcss": "^4.3.0",
+    "unstorage": "^1.17.5",
+    "vue": "^3.5.34",
+    "vue-router": "^5.0.7",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.100.0"
+  }
+}
