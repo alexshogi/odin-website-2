@@ -20,6 +20,16 @@ export default defineNuxtConfig({
       fontshare: false,
     },
   },
+  app: {
+    head: {
+      meta: [
+        {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover'
+        }
+      ]
+    }
+  },
   devtools: {
     enabled: true,
   },
@@ -45,6 +55,16 @@ export default defineNuxtConfig({
   vue: {
     compilerOptions: {
       isCustomElement: (tag) => tag === 'fitbase-widget',
+    },
+  },
+  image: {
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
     },
   },
 });

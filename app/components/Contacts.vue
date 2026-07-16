@@ -47,9 +47,12 @@ const currentBranch = computed(() => locations.find(b => b.id === activeBranchId
     id="contacts"
     class="w-full max-w-(--ui-container) mx-auto py-12 px-4"
   >
-    <h2 class="text-3xl font-black text-zinc-900 dark:text-white mb-8 uppercase tracking-tight">
-      Контактная информация
-    </h2>
+    <!-- Заголовок -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-5xl font-black text-zinc-950 dark:text-white uppercase tracking-tight">
+        Контактная <span class="text-red-600 dark:text-red-500">информация</span>
+      </h2>
+    </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
       <!-- ЛЕВАЯ ЧАСТЬ: Переключатели филиалов и инфо -->
@@ -133,3 +136,4 @@ const currentBranch = computed(() => locations.find(b => b.id === activeBranchId
     </div>
   </section>
 </template>
+

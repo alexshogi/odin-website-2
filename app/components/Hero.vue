@@ -31,9 +31,12 @@ const links = ref<ButtonProps[]>([
       <Carousel />
     </template>
 
-    <div class="relative max-w-sm mx-auto overflow-hidden rounded-none md:rounded-xl shadow-md border border-neutral-200 dark:border-neutral-800">
+    <div class="relative p-2 max-w-sm mx-auto overflow-hidden rounded-none md:rounded-xl">
+      <p class="mb-3">О студии за 30 секунд</p>
+
       <video
         controls
+        poster="/img/hero_video_preview.png"
         class="w-full h-auto aspect-9/16 object-cover focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
       >
         <source src="~/assets/video/hero_vid.mp4" type="video/mp4" />

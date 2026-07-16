@@ -15,6 +15,7 @@
 
 @theme {
   --breakpoint-sm: 30rem;
+  --spacing-safe-top: env(safe-area-inset-top);
 }
 
 @layer base {

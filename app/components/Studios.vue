@@ -12,6 +12,7 @@
       <img 
         :src="studio.bgImage" 
         :alt="studio.title"
+        loading="lazy"
         class="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none"
       />
 

@@ -3,22 +3,22 @@ const slides = [
   {
     badge: 'Экономно',
     titleHtml: 'Без годового<br>абонемента',
-    imageUrl: '/img/slider/gym-slide-1.jpg',
+    imageUrl: '/img/slider/gym-slide-1.webp',
   },
   {
     badge: 'Удобно',
     titleHtml: 'Тренируйся один<br>или с тренером',
-    imageUrl: '/img/slider/gym-slide-2.jpg',
+    imageUrl: '/img/slider/gym-slide-2.webp',
   },
   {
     badge: 'Удобно',
     titleHtml: 'Без очередей<br>на тренажеры',
-    imageUrl: '/img/slider/gym-slide-3.jpg',
+    imageUrl: '/img/slider/gym-slide-3.webp',
   },
   {
     badge: 'Выгодно',
     titleHtml: 'Плати за одного<br>тренируйся втроем',
-    imageUrl: '/img/slider/gym-slide-4.jpg',
+    imageUrl: '/img/slider/gym-slide-4.webp',
   },
 ];
 </script>
@@ -39,13 +39,13 @@ const slides = [
           <div class="block relative h-64 rounded-2xl overflow-hidden bg-neutral-950 border border-neutral-900 shadow-xl group transition-all duration-200">
             
             <!-- Затемняющий градиент -->
-            <div class="absolute inset-0 bg-linear-to-t from-neutral-950 via-neutral-900/40 to-transparent z-10" />
+            <div class="absolute inset-0 bg-linear-to-t from-neutral-950/30 via-neutral-900/15 to-transparent z-10" />
 
             <!-- Картинка слайда -->
             <img 
               :src="item.imageUrl" 
               alt="Слайд" 
-              class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-105 transition-transform duration-300"
+              class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-300"
             />
 
             <!-- Контент (текст и бэйдж) -->

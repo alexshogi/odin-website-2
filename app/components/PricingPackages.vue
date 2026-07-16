@@ -39,6 +39,7 @@ const studios = ref<Studio[]>([
         icon: 'i-lucide-users',
         items: [
           { name: 'Пробная тренировка', price: 1000 },
+          { name: 'Разовое занятие', price: 2500 },
           { name: 'Блок из 5 занятий', price: 10000 },
           { name: 'Блок из 10 занятий', price: 18000 },
           { name: 'Блок из 10 занятий', price: 16000, note: 'Дети до 18 лет' }
@@ -65,6 +66,7 @@ const studios = ref<Studio[]>([
         icon: 'i-lucide-users',
         items: [
           { name: 'Пробная тренировка', price: 1000 },
+          { name: 'Разовое занятие', price: 2500 },
           { name: 'Блок из 5 занятий', price: 10000 },
           { name: 'Блок из 10 занятий', price: 18000 },
           { name: 'Блок из 10 занятий', price: 16000, note: 'Дети до 18 лет' }
@@ -91,6 +93,7 @@ const studios = ref<Studio[]>([
         icon: 'i-lucide-users',
         items: [
           { name: 'Пробная тренировка', price: 1000 },
+          { name: 'Разовое занятие', price: 2000 },
           { name: 'Блок из 5 занятий', price: 9000 },
           { name: 'Блок из 10 занятий', price: 16000 },
           { name: 'Блок из 10 занятий', price: 16000, note: 'Дети до 18 лет' }
@@ -100,9 +103,9 @@ const studios = ref<Studio[]>([
         title: 'Самостоятельно (твой зал)',
         icon: 'i-lucide-dumbbell',
         items: [
-          { name: 'Разовое посещение', price: 1500 },
-          { name: 'Блок из 5 посещений', price: 7000 },
-          { name: 'Блок из 10 занятий', price: 12000 }
+          { name: 'Разовое посещение', price: 1200 },
+          { name: 'Блок из 5 посещений', price: 5500 },
+          { name: 'Блок из 10 занятий', price: 10000 }
         ]
       }
     ]
@@ -126,6 +129,7 @@ const studios = ref<Studio[]>([
         icon: 'i-lucide-users',
         items: [
           { name: 'Пробная тренировка', price: 1000 },
+          { name: 'Разовое занятие', price: 2500 },
           { name: 'Блок из 5 занятий', price: 10000 },
           { name: 'Блок из 10 занятий', price: 18000 }
         ]
@@ -144,7 +148,7 @@ const formatPrice = (value: number) => {
 </script>
 
 <template>
-  <section class="bg-white dark:bg-black py-16 px-4 sm:px-6 lg:px-8 font-sans transition-colors duration-300">
+  <section id="prices" class="bg-white dark:bg-black py-16 px-4 sm:px-6 lg:px-8 font-sans transition-colors duration-300">
     <div class="max-w-7xl mx-auto">
       
       <!-- Заголовок -->

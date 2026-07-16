@@ -15,9 +15,10 @@ const slides = [
 
 <template>
   <div class="w-full max-w-(--ui-container) mx-auto px-4">
-    <div class="mb-8 text-center">
-      <h2 class="text-3xl font-black uppercase text-black dark:text-white">
-        <span class="text-red-600">Фотографии</span> студий
+    <!-- Заголовок -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-5xl font-black text-zinc-950 dark:text-white uppercase tracking-tight">
+        Фотографии <span class="text-red-600 dark:text-red-500">студий</span>
       </h2>
     </div>
 
@@ -36,6 +37,7 @@ const slides = [
             <img 
               :src="item" 
               alt="Слайд" 
+              loading="lazy"
               class="absolute inset-0 w-full h-full object-cover"
             />
           </div>

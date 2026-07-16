@@ -11,6 +11,8 @@
 
   <PricingPackages />
 
+  <TrainerSelection />
+
   <FAQ />
 
   <Contacts />

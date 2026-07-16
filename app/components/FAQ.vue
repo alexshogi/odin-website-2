@@ -51,10 +51,10 @@ const faqItems: AccordionItem[] = [
 
 <template>
   <div id="faq" class="w-full max-w-3xl mx-auto py-12 px-4">
-    <!-- Заголовок секции -->
-    <div class="mb-8 text-center">
-      <h2 class="text-3xl font-black uppercase text-black dark:text-white">
-        Частые <span class="text-red-600">вопросы</span>
+    <!-- Заголовок -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-5xl font-black text-zinc-950 dark:text-white uppercase tracking-tight">
+        Частые <span class="text-red-600 dark:text-red-500">вопросы</span>
       </h2>
     </div>
 

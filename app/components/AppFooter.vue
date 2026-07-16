@@ -17,25 +17,33 @@
               href="https://t.me/Odinfitness"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-8 h-8 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-white text-zinc-400 flex items-center justify-center transition-colors"
+              class="w-8 h-8 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-zinc-900 text-zinc-400 flex items-center justify-center transition-colors"
             >
-              <UIcon name="i-lucide-send" class="w-4 h-4" />
+              <img loading="lazy" src="/img/icons/telegram.svg" class="w-4 h-4" />
             </a>
             <a
               href="https://vk.com/club218956657"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-8 h-8 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-white text-zinc-400 flex items-center justify-center transition-colors"
+              class="w-8 h-8 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-zinc-900 text-zinc-400 flex items-center justify-center transition-colors"
             >
-              <UIcon name="i-lucide-message-circle" class="w-4 h-4" />
+              <img loading="lazy" src="/img/icons/vk.svg" class="w-4 h-4" />
             </a>
             <a
               href="https://www.youtube.com/channel/UC2F1HjrDJ3gp4c4A0Ga-GkQ"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-8 h-8 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-white text-zinc-400 flex items-center justify-center transition-colors"
+              class="w-8 h-8 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-zinc-900 text-zinc-400 flex items-center justify-center transition-colors"
             >
-              <UIcon name="i-lucide-video" class="w-4 h-4" />
+              <img loading="lazy" src="/img/icons/youtube.svg" class="w-4 h-4" />
+            </a>
+            <a
+              href="https://max.ru/u/f9LHodD0cOKkNy9MbxEnRJV0TikglgsUyEfP9x2WtgCKJg469uYb432ItP4"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-8 h-8 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-zinc-900 text-zinc-400 flex items-center justify-center transition-colors"
+            >
+              <img loading="lazy" src="/img/icons/comment-round.svg" class="w-4 h-4" />
             </a>
           </div>
         </div>
@@ -112,6 +120,10 @@
           </h4>
           <ul class="grid grid-cols-2 gap-2 text-xs">
             <li><a href="#studios" class="hover:text-white transition-colors py-1 block">Студии</a></li>
+            <li><a href="#schedule" class="hover:text-white transition-colors py-1 block">Расписание</a></li>
+            <li><a href="#prices" class="hover:text-white transition-colors py-1 block">Цены</a></li>
+            <li><a href="#trainers" class="hover:text-white transition-colors py-1 block">Тренеры</a></li>
+            <li><a href="#howitworks" class="hover:text-white transition-colors py-1 block">Как это работает</a></li>
             <li><a href="#reviews" class="hover:text-white transition-colors py-1 block">Отзывы</a></li>
             <li><a href="#contacts" class="hover:text-white transition-colors py-1 block">Контакты</a></li>
             <li class="col-span-2 mt-2">
