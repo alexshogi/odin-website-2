@@ -9,10 +9,12 @@
       class="h-full border rounded-xl p-4 md:p-8 flex flex-col justify-between gap-4 relative overflow-hidden bg-neutral-900 text-white"
     >
       <!-- Фоновое изображение из папки public/gallery/ -->
-      <img 
+      <NuxtImg 
         :src="studio.bgImage" 
         :alt="studio.title"
         loading="lazy"
+        format="webp"
+        sizes="100vw"
         class="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none"
       />
 

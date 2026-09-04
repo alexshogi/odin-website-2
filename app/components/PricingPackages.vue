@@ -224,11 +224,11 @@ const formatPrice = (value: number) => {
           </div>
 
           <!-- Кнопка действия для карточки -->
-          <div class="mt-8">
+          <!-- <div class="mt-8">
             <button class="w-full py-3 px-4 rounded-lg bg-zinc-900 hover:bg-black dark:bg-zinc-900 dark:hover:bg-zinc-800 text-white font-bold text-xs uppercase tracking-widest transition-colors duration-200 cursor-pointer border border-transparent dark:border-zinc-800">
               Выбрать тариф
             </button>
-          </div>
+          </div> -->
 
         </div>
       </div>

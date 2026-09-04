@@ -1,24 +1,26 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 
 const STUDIO_ID = 3;
-
-const isLoading = ref(true);
+const isLoading = ref(false);
+const isIframeLoaded = ref(false);
+const isActivated = ref(false); // Флаг: нажал ли пользователь на кнопку активации
 
 const fitbaseWidgetUrl = computed(() => {
   return `https://m58666.fitbase.io/schedule-fitbase-widget?club=${STUDIO_ID}`;
 });
 
-function startLoadingTimer() {
+// Активация виджета по клику
+function activateWidget() {
+  isActivated.value = true;
   isLoading.value = true;
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 1000);
 }
 
-onMounted(() => {
-  startLoadingTimer();
-});
+// Скрытие скелетона только после полной загрузки фрейма
+function handleIframeLoad() {
+  isLoading.value = false;
+  isIframeLoaded.value = true;
+}
 </script>
 
 <template>
@@ -39,13 +41,32 @@ onMounted(() => {
       </div>
 
       <!-- Контейнер виджета -->
-      <div class="relative w-full h-[650px] md:h-[800px] bg-zinc-50 dark:bg-zinc-950/40">
+      <div class="relative w-full h-[500px] md:h-[650px] bg-zinc-50 dark:bg-zinc-950/40">
         
-        <!-- Скелетон от Nuxt UI -->
+        <!-- СОСТОЯНИЕ 1: Интерактивное превью (Ноль влияния на TBT / Script Evaluation) -->
         <div 
-          v-show="isLoading" 
-          class="absolute inset-0 flex flex-col items-center justify-center p-8 space-y-4 bg-white dark:bg-zinc-900 z-10 transition-opacity duration-300"
-          :class="{ 'opacity-100': isLoading, 'opacity-0 pointer-events-none': !isLoading }"
+          v-if="!isActivated" 
+          class="absolute inset-0 flex flex-col items-center justify-center p-8 bg-zinc-100/50 dark:bg-zinc-900/50 backdrop-blur-sm z-20 text-center"
+        >
+          <h3 class="text-lg font-bold text-zinc-800 dark:text-zinc-200">Онлайн-расписание</h3>
+          <p class="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mt-1 mb-6">
+            Нажмите кнопку ниже, чтобы загрузить актуальное расписание и записаться на тренировку.
+          </p>
+          <UButton
+            size="xl"
+            color="primary"
+            class="font-bold rounded-xl shadow-lg cursor-pointer transform hover:scale-105 transition-transform"
+            icon="i-lucide-play"
+            @click="activateWidget"
+          >
+            Показать расписание
+          </UButton>
+        </div>
+
+        <!-- СОСТОЯНИЕ 2: Скелетон во время реальной загрузки фрейма -->
+        <div 
+          v-if="isLoading" 
+          class="absolute inset-0 flex flex-col items-center justify-center p-8 space-y-4 bg-white dark:bg-zinc-900 z-10"
         >
           <USkeleton class="h-8 w-64 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-md" />
           <USkeleton class="h-4 w-48 bg-zinc-100 dark:bg-zinc-800/60 animate-pulse rounded-md" />
@@ -55,16 +76,20 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Тег iframe виджета FitBase -->
-        <iframe
-          :src="fitbaseWidgetUrl"
-          frameborder="0"
-          scrolling="yes"
-          allow="geolocation"
-          class="w-full h-full border-0 rounded-b-xl"
-          title="Онлайн-расписание FitBase"
-        />
-
+        <!-- Настоящий iframe (Рендерится СТРОГО после клика) -->
+        <ClientOnly>
+          <iframe
+            v-if="isActivated"
+            :src="fitbaseWidgetUrl"
+            frameborder="0"
+            scrolling="yes"
+            allow="geolocation"
+            class="w-full h-full border-0 rounded-b-xl transition-opacity duration-500"
+            :class="{ 'opacity-100': isIframeLoaded, 'opacity-0': !isIframeLoaded }"
+            title="Онлайн-расписание FitBase"
+            @load="handleIframeLoad"
+          />
+        </ClientOnly>
       </div>
 
       <!-- Резервный блок -->
@@ -88,14 +113,3 @@ onMounted(() => {
     </div>
   </section>
 </template>
-
-<style scoped>
-iframe {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-</style>

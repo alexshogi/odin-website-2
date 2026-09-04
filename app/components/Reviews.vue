@@ -34,6 +34,11 @@ const testimonials = [
     text: 'Формат мини-групп - пушка. Нас всего 4-5 человек, внимание тренера 100%. Ошибки исправляют сразу, халявить не получается. Ценник за такой уровень сервиса более чем адекватный.'
   }
 ];
+
+onMounted(async () => {
+  const { register } = await import('swiper/element/bundle')
+  register()
+})
 </script>
 
 <template>
@@ -107,7 +112,8 @@ const testimonials = [
           <div class="flex items-center space-x-3 mt-6 pt-4 border-t border-zinc-100 dark:border-zinc-800/60 relative z-10">
             <UAvatar 
               :src="review.avatar" 
-              :alt="review.name" 
+              :alt="review.name"
+              loading="lazy"
               size="lg"
               class="rounded-xl object-cover transition-all duration-500 border border-zinc-200 dark:border-zinc-800"
             />

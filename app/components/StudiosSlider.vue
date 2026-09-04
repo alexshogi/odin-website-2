@@ -11,6 +11,11 @@ const slides = [
   '/img/interiors/int_09.webp',
   '/img/interiors/int_10.webp',
 ];
+
+onMounted(async () => {
+  const { register } = await import('swiper/element/bundle')
+  register()
+})
 </script>
 
 <template>
@@ -25,19 +30,24 @@ const slides = [
     <UCarousel
       :items="slides"
       loop
-      auto-scroll
       class="w-full"
       :ui="{
-        item: 'basis-2/3 md:basis-1/2 shrink-0 p-2'
+        item: 'basis-3/4 md:basis-1/2 shrink-0 p-2'
       }"
     >
-      <template #default="{ item }">
+      <!-- Достаем индекс слайда index для управления приоритетом загрузки -->
+      <template #default="{ item, index }">
         <div class="w-full select-none">
           <div class="block relative h-120 rounded-2xl overflow-hidden bg-neutral-500 border border-neutral-900 shadow-xl">
-            <img 
+            <!-- Оптимизируем через NuxtImg -->
+            <NuxtImg 
               :src="item" 
-              alt="Слайд" 
-              loading="lazy"
+              alt="Фотография интерьера студии Один Фитнес"
+              width="800"
+              height="480"
+              quality="75"
+              :loading="index === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="index === 0 ? 'high' : 'auto'"
               class="absolute inset-0 w-full h-full object-cover"
             />
           </div>

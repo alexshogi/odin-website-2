@@ -2,7 +2,7 @@
   <UApp>
     <AppHeader />
 
-    <main style="padding-top: calc(4rem + env(safe-area-inset-top));">
+    <main class="pt-0 md:pt-[calc(4rem+env(safe-area-inset-top))]">
       <NuxtPage />
     </main>
 

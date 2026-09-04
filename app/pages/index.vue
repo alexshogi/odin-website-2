@@ -3,23 +3,29 @@
 
   <!-- <Studios /> -->
 
-  <Schedule />
+  <LazySchedule />
 
-  <StudiosSlider />
+  <NuxtHydrate when-visible>
+    <LazyStudiosSlider />
+  </NuxtHydrate>
 
-  <HowItWorks />
+  <LazyHowItWorks />
 
-  <PricingPackages />
+  <LazyPricingPackages />
 
-  <TrainerSelection />
+  <LazyTrainerSelection />
 
-  <FAQ />
+  <LazyFAQ />
 
-  <Contacts />
+  <LazyContacts />
 
-  <CallbackForm />
+  <NuxtHydrate when-visible>
+    <LazyCallbackForm />
+  </NuxtHydrate>
 
-  <Reviews />
+  <NuxtHydrate when-visible>
+    <LazyReviews />
+  </NuxtHydrate>
 
-  <DownloadApps />
+  <LazyDownloadApps />
 </template>

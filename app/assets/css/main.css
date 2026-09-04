@@ -2,15 +2,32 @@
 @import "@nuxt/ui";
 
 @font-face {
-  font-family: 'RexBold';
-  src: local('RexBold'), url(~/assets/fonts/RexBold.otf) format('opentype');
+  font-family: 'Geometria';
+  src: url('/fonts/Geometria-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Geometria';
-  src: local('Geometria'), url(~/assets/fonts/Geometria.ttf) format('truetype');
+  src: url('/fonts/Geometria-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
   font-display: swap;
+}
+
+@font-face {
+  font-family: 'RexBold';
+  src: url('/fonts/RexBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+iframe,
+fitbase-widget {
+  contain: layout size style;
 }
 
 @theme {

@@ -19,10 +19,7 @@ const links = ref<ButtonProps[]>([
 </script>
 
 <template>
-  <UPageHero
-    orientation="horizontal"
-    :links="links"
-  >
+  <UPageHero orientation="horizontal" :links="links">
     <template #title>
       Тренировки с тренером или <span class="text-red-600">самостоятельно</span>
     </template>
@@ -32,18 +29,18 @@ const links = ref<ButtonProps[]>([
     </template>
 
     <div class="relative p-2 max-w-sm mx-auto overflow-hidden rounded-none md:rounded-xl">
-      <p class="mb-3">О студии за 30 секунд</p>
+      <p class="mb-3 font-medium text-sm">О студии за 30 секунд</p>
 
       <video
         controls
+        preload="none"
         poster="/img/hero_video_preview.png"
-        class="w-full h-auto aspect-9/16 object-cover focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+        class="w-full h-auto aspect-9/16 object-cover focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-xl"
+        title="Презентация студии Один Фитнес"
       >
         <source src="~/assets/video/hero_vid.mp4" type="video/mp4" />
         Ваш браузер не поддерживает видео
       </video>
     </div>
   </UPageHero>
-
-  <!-- <Carousel /> -->
 </template>
