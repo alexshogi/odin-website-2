@@ -1,4 +1,6 @@
 // https://nuxt.com
+import { visualizer } from 'rollup-plugin-visualizer';
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   modules: [
@@ -14,10 +16,9 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
   ],
   $production: {
-    // @ts-ignore
     delayHydration: {
-      mode: 'init', // Меняем с 'mount' на 'init'
-      replayClick: true, // Запоминает первый клик пользователя и воспроизводит его после гидратации
+      mode: 'init',
+      replayClick: true,
     }
   },
   css: ['~/assets/css/main.css'],
@@ -29,34 +30,17 @@ export default defineNuxtConfig({
           content: 'width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover'
         }
       ],
-      // link: [
-      //   {
-      //     rel: 'preload',
-      //     href: '/fonts/Geometria-Regular.woff2',
-      //     as: 'font',
-      //     type: 'font/woff2',
-      //     crossorigin: 'anonymous'
-      //   },
-      //   {
-      //     rel: 'preload',
-      //     href: '/fonts/Geometria-Medium.woff2',
-      //     as: 'font',
-      //     type: 'font/woff2',
-      //     crossorigin: 'anonymous'
-      //   },
-      //   {
-      //     rel: 'preload',
-      //     href: '/fonts/RexBold.woff2',
-      //     as: 'font',
-      //     type: 'font/woff2',
-      //     crossorigin: 'anonymous'
-      //   },
-      // ]
     }
   },
   devtools: {
-    enabled: false, // Выключаем девтулзы, они жестко жрут TBT на продакшене
+    enabled: false,
   },
+  
+  // Добавляем транспиляцию для проблемных пакетов
+  build: {
+    transpile: ['@vueuse/core', '@vueuse/shared', 'maska']
+  },
+
   vite: {
     optimizeDeps: {
       include: [
@@ -64,7 +48,34 @@ export default defineNuxtConfig({
         'swiper/element/bundle',
         'zod',
       ],
+      // Исключаем проблемный dist из предварительной оптимизации, чтобы Vite брал чистый ESM
+      exclude: ['@vueuse/core', '@vueuse/shared']
     },
+    plugins: [
+      visualizer({
+        filename: './.nuxt/stats.html',
+        open: true,
+        gzipSize: true,
+        brotliSize: true
+      }),
+    ],
+    build: {
+      // Настраиваем разбиение на чанки (Code Splitting)
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            // Выносим тяжелые вендорные библиотеки в отдельные файлы
+            if (id.includes('node_modules')) {
+              if (id.includes('zod')) return 'vendor-zod';
+              if (id.includes('swiper')) return 'vendor-swiper';
+              if (id.includes('@vueuse')) return 'vendor-vueuse';
+              if (id.includes('maska')) return 'vendor-maska';
+              return 'vendor-core'; // Всё остальное (Nuxt/Vue ядро)
+            }
+          }
+        }
+      }
+    }
   },
   colorMode: {
     preference: 'light',
@@ -88,11 +99,9 @@ export default defineNuxtConfig({
   },
   nitro: {
     routeRules: {
-      // Кэшируем системные файлы Nuxt на 1 год
       '/_nuxt/**': { 
         headers: { 'Cache-Control': 'public, max-age=31536000, immutable' } 
       },
-      // Кэшируем шрифты на 1 год (убирает предупреждения Lighthouse)
       '/fonts/**': {
         headers: { 'Cache-Control': 'public, max-age=31536000, immutable' }
       }

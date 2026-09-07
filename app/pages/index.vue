@@ -3,6 +3,8 @@
 
   <!-- <Studios /> -->
 
+  <LazyDownloadApps />
+
   <LazySchedule />
 
   <NuxtHydrate when-visible>
@@ -26,6 +28,4 @@
   <NuxtHydrate when-visible>
     <LazyReviews />
   </NuxtHydrate>
-
-  <LazyDownloadApps />
 </template>
