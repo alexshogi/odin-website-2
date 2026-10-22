@@ -133,6 +133,15 @@ const studios = ref<Studio[]>([
           { name: 'Блок из 5 занятий', price: 10000 },
           { name: 'Блок из 10 занятий', price: 18000 }
         ]
+      },
+      {
+        title: 'Самостоятельно (твой зал)',
+        icon: 'i-lucide-dumbbell',
+        items: [
+          { name: 'Разовое посещение', price: 1200 },
+          { name: 'Блок из 5 посещений', price: 5500 },
+          { name: 'Блок из 10 занятий', price: 10000 }
+        ]
       }
     ]
   }
