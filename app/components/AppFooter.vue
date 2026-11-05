@@ -9,7 +9,7 @@
           <h3 class="text-white text-xl font-black tracking-wider uppercase">
             ОДИН
           </h3>
-          <p class="text-xs leading-relaxed max-w-xs text-zinc-500">
+          <p class="text-xs leading-relaxed max-w-xs text-zinc-400">
             Сеть фитнес-студий, где заканчиваются поиски «той самой» тренировки. Работаем на результат в мини-группах и персонально с тренером, либо самостоятельно.
           </p>
           <div class="flex space-x-3 pt-2">
@@ -17,33 +17,37 @@
               href="https://t.me/Odinfitness"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-8 h-8 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-zinc-900 text-zinc-400 flex items-center justify-center transition-colors"
+              aria-label="Телеграм"
+              class="size-11 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-zinc-900 text-zinc-400 flex items-center justify-center transition-colors"
             >
-              <img loading="lazy" src="/img/icons/telegram.svg" class="w-4 h-4" />
+              <img loading="lazy" src="/img/icons/telegram.svg" alt="" class="w-4 h-4" />
             </a>
             <a
               href="https://vk.com/club218956657"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-8 h-8 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-zinc-900 text-zinc-400 flex items-center justify-center transition-colors"
+              aria-label="ВКонтакте"
+              class="size-11 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-zinc-900 text-zinc-400 flex items-center justify-center transition-colors"
             >
-              <img loading="lazy" src="/img/icons/vk.svg" class="w-4 h-4" />
+              <img loading="lazy" src="/img/icons/vk.svg" alt="" class="w-4 h-4" />
             </a>
             <a
               href="https://www.youtube.com/channel/UC2F1HjrDJ3gp4c4A0Ga-GkQ"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-8 h-8 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-zinc-900 text-zinc-400 flex items-center justify-center transition-colors"
+              aria-label="YouTube"
+              class="size-11 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-zinc-900 text-zinc-400 flex items-center justify-center transition-colors"
             >
-              <img loading="lazy" src="/img/icons/youtube.svg" class="w-4 h-4" />
+              <img loading="lazy" src="/img/icons/youtube.svg" alt="" class="w-4 h-4" />
             </a>
             <a
               href="https://max.ru/u/f9LHodD0cOKkNy9MbxEnRJV0TikglgsUyEfP9x2WtgCKJg469uYb432ItP4"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-8 h-8 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-zinc-900 text-zinc-400 flex items-center justify-center transition-colors"
+              aria-label="Мессенджер MAX"
+              class="size-11 rounded-xl bg-zinc-900 hover:bg-red-600 hover:text-zinc-900 text-zinc-400 flex items-center justify-center transition-colors"
             >
-              <img loading="lazy" src="/img/icons/comment-round.svg" class="w-4 h-4" />
+              <img loading="lazy" src="/img/icons/comment-round.svg" alt="" class="w-4 h-4" />
             </a>
           </div>
         </div>
@@ -58,28 +62,28 @@
               <UIcon name="i-lucide-map-pin" class="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
               <div>
                 <p class="text-zinc-300 font-medium">м. Бульвар Рокоссовского</p>
-                <p class="text-zinc-500 group-hover:text-zinc-400 transition-colors">ул. Тагильская, д. 4В</p>
+                <p class="text-zinc-400 group-hover:text-zinc-300 transition-colors">ул. Тагильская, д. 4В</p>
               </div>
             </li>
             <li class="group flex items-start space-x-2">
               <UIcon name="i-lucide-map-pin" class="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
               <div>
                 <p class="text-zinc-300 font-medium">м. Ростокино</p>
-                <p class="text-zinc-500 group-hover:text-zinc-400 transition-colors">ул. Красная Сосна, д. 3A</p>
+                <p class="text-zinc-400 group-hover:text-zinc-300 transition-colors">ул. Красная Сосна, д. 3A</p>
               </div>
             </li>
             <li class="group flex items-start space-x-2">
               <UIcon name="i-lucide-map-pin" class="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
               <div>
                 <p class="text-zinc-300 font-medium">м. Текстильщики</p>
-                <p class="text-zinc-500 group-hover:text-zinc-400 transition-colors">1-й Грайвороновский проезд, 11к2</p>
+                <p class="text-zinc-400 group-hover:text-zinc-300 transition-colors">1-й Грайвороновский проезд, 11к2</p>
               </div>
             </li>
             <li class="group flex items-start space-x-2">
               <UIcon name="i-lucide-map-pin" class="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
               <div>
                 <p class="text-zinc-300 font-medium">м. Бабушкинская</p>
-                <p class="text-zinc-500 group-hover:text-zinc-400 transition-colors">ул. Коминтерна, д. 15к1</p>
+                <p class="text-zinc-400 group-hover:text-zinc-300 transition-colors">ул. Коминтерна, д. 15к1</p>
               </div>
             </li>
           </ul>
@@ -93,13 +97,13 @@
           <ul class="space-y-3 text-xs">
             <li class="flex items-center space-x-2">
               <UIcon name="i-lucide-phone" class="w-4 h-4 text-zinc-500" />
-              <a href="tel:+79152940004" class="text-zinc-300 font-semibold hover:text-red-500 transition-colors text-sm">
+              <a href="tel:+79152940004" class="inline-flex min-h-11 items-center text-zinc-300 font-semibold hover:text-red-500 transition-colors text-sm">
                 +7 (915) 294-00-04
               </a>
             </li>
             <li class="flex items-center space-x-2">
               <UIcon name="i-lucide-mail" class="w-4 h-4 text-zinc-500" />
-              <a href="mailto:dirom1995@mail.ru" class="hover:text-zinc-200 transition-colors">
+              <a href="mailto:dirom1995@mail.ru" class="inline-flex min-h-11 items-center hover:text-zinc-200 transition-colors">
                 dirom1995@mail.ru
               </a>
             </li>
@@ -107,7 +111,7 @@
               <UIcon name="i-lucide-clock" class="w-4 h-4 text-zinc-500 mt-0.5" />
               <div>
                 <p class="text-zinc-300">Ежедневно</p>
-                <p class="text-zinc-500">09:00 – 23:00</p>
+                <p class="text-zinc-400">09:00 – 23:00</p>
               </div>
             </li>
           </ul>
@@ -119,24 +123,19 @@
             Навигация
           </h4>
           <ul class="grid grid-cols-2 gap-2 text-xs">
-            <li><a href="#studios" class="hover:text-white transition-colors py-1 block">Студии</a></li>
-            <li><a href="#schedule" class="hover:text-white transition-colors py-1 block">Расписание</a></li>
-            <li><a href="#prices" class="hover:text-white transition-colors py-1 block">Цены</a></li>
-            <li><a href="#trainers" class="hover:text-white transition-colors py-1 block">Тренеры</a></li>
-            <li><a href="#howitworks" class="hover:text-white transition-colors py-1 block">Как это работает</a></li>
-            <li><a href="#reviews" class="hover:text-white transition-colors py-1 block">Отзывы</a></li>
-            <li><a href="#contacts" class="hover:text-white transition-colors py-1 block">Контакты</a></li>
+            <li><a href="#studios" class="flex min-h-11 items-center hover:text-white transition-colors">Студии</a></li>
+            <li><a href="#schedule" class="flex min-h-11 items-center hover:text-white transition-colors">Расписание</a></li>
+            <li><a href="#prices" class="flex min-h-11 items-center hover:text-white transition-colors">Цены</a></li>
+            <li><a href="#trainers" class="flex min-h-11 items-center hover:text-white transition-colors">Тренеры</a></li>
+            <li><a href="#howitworks" class="flex min-h-11 items-center hover:text-white transition-colors">Как это работает</a></li>
+            <li><a href="#reviews" class="flex min-h-11 items-center hover:text-white transition-colors">Отзывы</a></li>
+            <li><a href="#contacts" class="flex min-h-11 items-center hover:text-white transition-colors">Контакты</a></li>
             <li class="col-span-2 mt-2">
-              <a href="#schedule">
-                <UButton 
-                  size="sm" 
-                  color="neutral" 
-                  variant="solid" 
-                  block
-                  class="rounded-xl! font-bold bg-white text-black hover:bg-red-600 hover:text-white transition-colors py-2 cursor-pointer"
-                >
-                  Записаться онлайн
-                </UButton>
+              <a
+                href="#schedule"
+                class="flex min-h-11 items-center justify-center rounded-xl bg-white px-3 py-2 text-xs font-bold text-black transition-colors hover:bg-red-600 hover:text-white"
+              >
+                Записаться онлайн
               </a>
             </li>
           </ul>
@@ -145,16 +144,16 @@
       </div>
 
       <!-- Нижняя линия: Копирайт и Юридические данные -->
-      <div class="border-t border-zinc-900 pt-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-[11px] text-zinc-600">
+      <div class="border-t border-zinc-900 pt-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-[11px] text-zinc-400">
         <div class="space-y-1">
           <p>© {{ new Date().getFullYear() }} Сеть фитнес-студий «ОДИН». Все права защищены.</p>
-          <p class="text-zinc-700">
+          <p class="text-zinc-400">
             ИП Загребин Дмитрий Романович | ИНН: 504314265400 | ОГРНИП: 323508100388277
           </p>
         </div>
         <div class="flex flex-wrap gap-x-4 gap-y-1">
-          <a href="/docs/ОфертаСтудия.pdf" class="hover:text-zinc-400 transition-colors">Договор-оферта</a>
-          <a href="/docs/СтудияПолитика.pdf" class="hover:text-zinc-400 transition-colors">Политика конфиденциальности</a>
+          <a href="/docs/ОфертаСтудия.pdf" class="inline-flex min-h-11 items-center hover:text-zinc-400 transition-colors">Договор-оферта</a>
+          <a href="/docs/СтудияПолитика.pdf" class="inline-flex min-h-11 items-center hover:text-zinc-400 transition-colors">Политика конфиденциальности</a>
         </div>
       </div>
 

@@ -11,11 +11,6 @@ const slides = [
   '/img/interiors/int_09.webp',
   '/img/interiors/int_10.webp',
 ];
-
-onMounted(async () => {
-  const { register } = await import('swiper/element/bundle')
-  register()
-})
 </script>
 
 <template>
@@ -27,32 +22,37 @@ onMounted(async () => {
       </h2>
     </div>
 
-    <UCarousel
-      :items="slides"
-      loop
-      class="w-full"
-      :ui="{
-        item: 'basis-3/4 md:basis-1/2 shrink-0 p-2'
-      }"
-    >
-      <!-- Достаем индекс слайда index для управления приоритетом загрузки -->
-      <template #default="{ item, index }">
+    <div class="flex w-full snap-x snap-mandatory overflow-x-auto no-scrollbar" role="region" aria-label="Фотографии студий">
+      <div
+        v-for="item in slides"
+        :key="item"
+        class="basis-3/4 md:basis-1/2 shrink-0 snap-start p-2"
+      >
         <div class="w-full select-none">
           <div class="block relative h-120 rounded-2xl overflow-hidden bg-neutral-500 border border-neutral-900 shadow-xl">
-            <!-- Оптимизируем через NuxtImg -->
-            <NuxtImg 
-              :src="item" 
+            <NuxtImg
+              :src="item"
               alt="Фотография интерьера студии Один Фитнес"
-              width="800"
-              height="480"
-              quality="75"
-              :loading="index === 0 ? 'eager' : 'lazy'"
-              :fetchpriority="index === 0 ? 'high' : 'auto'"
+              width="600"
+              height="450"
+              quality="65"
+              loading="lazy"
               class="absolute inset-0 w-full h-full object-cover"
             />
           </div>
         </div>
-      </template>
-    </UCarousel>
+      </div>
+    </div>
   </div>
 </template>
+
+<style scoped>
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+</style>

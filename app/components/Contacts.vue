@@ -87,14 +87,9 @@ const currentBranch = computed(() => locations.find(b => b.id === activeBranchId
         </div>
 
         <!-- Информация о выбранном филиале -->
-        <UCard 
-          :ui="{ 
-            root: 'border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-none bg-zinc-50 dark:bg-zinc-900/50',
-            body: 'p-5 space-y-4'
-          }"
-        >
+        <div class="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 space-y-4 dark:border-zinc-800 dark:bg-zinc-900/50">
           <div>
-            <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 block mb-1">Адрес</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 dark:text-zinc-400 block mb-1">Адрес</span>
             <p class="text-sm font-semibold text-zinc-800 dark:text-zinc-200 leading-snug">
               {{ currentBranch.address }}
             </p>
@@ -102,7 +97,7 @@ const currentBranch = computed(() => locations.find(b => b.id === activeBranchId
 
           <div class="flex items-center justify-between pt-2 border-t border-zinc-200/60 dark:border-zinc-800">
             <div>
-              <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 block mb-1">Рейтинг Яндекса</span>
+              <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 dark:text-zinc-400 block mb-1">Рейтинг Яндекса</span>
               <div class="flex items-center space-x-1">
                 <UIcon name="i-lucide-star" class="w-4 h-4 fill-amber-500 text-amber-500" />
                 <span class="text-xs font-bold text-zinc-900 dark:text-white">5.0 / Хорошее место</span>
@@ -110,13 +105,13 @@ const currentBranch = computed(() => locations.find(b => b.id === activeBranchId
             </div>
             
             <div class="text-right">
-              <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 block mb-1">Контакты</span>
-              <a href="tel:+79152940004" class="text-sm font-bold text-zinc-900 dark:text-white hover:underline block">
+              <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 dark:text-zinc-400 block mb-1">Контакты</span>
+              <a href="tel:+79152940004" class="inline-flex min-h-11 items-center text-sm font-bold text-zinc-900 dark:text-white hover:underline">
                 +7 (915) 294-00-04
               </a>
             </div>
           </div>
-        </UCard>
+        </div>
       </div>
 
       <!-- ПРАВАЯ ЧАСТЬ: Карта (iframe) -->
@@ -129,6 +124,8 @@ const currentBranch = computed(() => locations.find(b => b.id === activeBranchId
           height="100%"
           frameborder="0"
           allowfullscreen="true"
+          loading="lazy"
+          :title="`Карта студии — ${currentBranch.name}`"
           class="absolute inset-0 w-full h-full grayscale dark:invert dark:hue-rotate-180 dark:contrast-125"
           style="position: absolute;"
         ></iframe>

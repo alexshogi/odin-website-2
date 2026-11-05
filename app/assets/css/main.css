@@ -35,6 +35,20 @@ fitbase-widget {
   --spacing-safe-top: env(safe-area-inset-top);
 }
 
+/* Не раскладываем секции ниже первого экрана до подхода к ним: первая отрисовка
+   заметно дешевле. При переходе по якорю раскрываем всё, иначе плавная прокрутка
+   целится в оценочную высоту и промахивается. Отзывы оставляем в раскладке:
+   в пропущенной секции Lighthouse неверно считает контраст карточек. */
+main > :nth-child(n + 2):not(:where(#reviews)),
+#__nuxt > footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1200px;
+}
+
+main:has(> :target) > * {
+  content-visibility: visible;
+}
+
 @layer base {
   html {
     /* Включает плавную анимацию прокрутки для всего сайта */

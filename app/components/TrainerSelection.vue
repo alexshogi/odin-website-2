@@ -27,7 +27,7 @@ const studiosData = ref<StudioTrainers[]>([
         id: 'tagil-dima',
         name: 'Дмитрий',
         role: 'Основатель сети студий, персональный тренер',
-        photo: 'img/coaches/Dima.webp',
+        photo: '/img/coaches/Dima.webp',
         regalias: [
           'Московский педагогический государственный университет (направление — персональный тренер)',
           'Колледж Бена Вейдера (персональный тренер)',
@@ -44,7 +44,7 @@ const studiosData = ref<StudioTrainers[]>([
         id: 'tagil-arina',
         name: 'Арина',
         role: 'Персональный тренер',
-        photo: 'img/coaches/Arina.webp',
+        photo: '/img/coaches/Arina.webp',
         regalias: [
           'Профессиональная школа бодибилдинга и фитнеса',
           'Персональный тренер по фитнесу и бодибилдингу',
@@ -58,7 +58,7 @@ const studiosData = ref<StudioTrainers[]>([
         id: 'tagil-igor',
         name: 'Игорь',
         role:'Персональный тренер',
-        photo: 'img/coaches/Igor.webp',
+        photo: '/img/coaches/Igor.webp',
         regalias: [
           'Профессиональная школа по Фитнесу и Бодибилдингу Start Fit',
           'Стаж работы тренером 12 лет',
@@ -81,7 +81,7 @@ const studiosData = ref<StudioTrainers[]>([
         id: 'pine-tatiana',
         name: 'Татьяна',
         role: 'Персональный тренер',
-        photo: 'img/coaches/Tati.webp',
+        photo: '/img/coaches/Tati.webp',
         regalias: [
           'Колледж фитнеса и бодибилдинга им. Бена Вейдера',
           'Опыт более 9 лет',
@@ -95,7 +95,7 @@ const studiosData = ref<StudioTrainers[]>([
         id: 'pine-alexander',
         name: 'Александр',
         role: 'Персональный тренер',
-        photo: 'img/coaches/Alexandr.webp',
+        photo: '/img/coaches/Alexandr.webp',
         regalias: [],
         quotes: [
           'Знакомо чувство, когда тренировки даются тяжело и не приносят удовольствия? Давай изменим это! Моя суперсила — видеть цели каждого и превращать их в четкий и увлекательный план действий. Мы будем заниматься так, как нравится тебе: в твоём темпе, с заботой о самочувствии и полным вниманием к деталям',
@@ -113,7 +113,7 @@ const studiosData = ref<StudioTrainers[]>([
         id: 'gray-makar',
         name: 'Макар',
         role: 'Персональный тренер',
-        photo: 'img/coaches/Makar.webp',
+        photo: '/img/coaches/Makar.webp',
         regalias: [
           'МС по тяжелой атлетике. Призёр чемпионата России',
           'МС по пауэрлифтингу IPF',
@@ -134,7 +134,7 @@ const studiosData = ref<StudioTrainers[]>([
         id: 'kom-dima',
         name: 'Дмитрий',
         role: 'Основатель сети студий, персональный тренер',
-        photo: 'img/coaches/Dima.webp',
+        photo: '/img/coaches/Dima.webp',
         regalias: [
           'Московский педагогический государственный университет (направление — персональный тренер)',
           'Колледж Бена Вейдера (персональный тренер)',
@@ -184,7 +184,7 @@ const currentStudio = computed<StudioTrainers>(() => {
       <!-- Вкладки студий -->
       <div class="flex flex-wrap justify-center gap-2 mb-12 border-b border-zinc-200 dark:border-zinc-800 pb-4">
         <button v-for="studio in studiosData" @click="activeStudioId = studio.studioId" :class="[
-          'px-5 py-3 text-sm font-bold uppercase rounded-lg transition-all',
+          'min-h-11 px-5 py-3 text-sm font-bold uppercase rounded-lg transition-all',
           activeStudioId === studio.studioId ? 'bg-red-600 text-white' : 'bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400'
         ]">
           {{ studio.studioName }}
@@ -197,10 +197,16 @@ const currentStudio = computed<StudioTrainers>(() => {
           class="group bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden flex flex-col sm:flex-row">
           <!-- Фото -->
           <div class="relative w-full sm:w-56 h-80 bg-zinc-200 dark:bg-zinc-900">
-            <Img 
-              :src="trainer.photo" 
-              :alt="trainer.name" 
+            <NuxtImg
+              :src="trainer.photo"
+              :alt="trainer.name"
+              width="640"
+              height="640"
+              format="webp"
+              quality="70"
+              sizes="320px"
               loading="lazy"
+              decoding="async"
               class="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
             />
           </div>

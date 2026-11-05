@@ -1,31 +1,31 @@
+<script setup lang="ts">
+// Начинаем гидратацию за 300px до появления секции во вьюпорте,
+// чтобы к моменту скролла кнопки и табы уже работали.
+const hydrateOnVisible = { rootMargin: '300px 0px' };
+</script>
+
 <template>
-  <Hero />
+  <LazyHero hydrate-never />
 
   <!-- <Studios /> -->
 
-  <LazyDownloadApps />
+  <LazyDownloadApps :hydrate-on-visible="hydrateOnVisible" />
 
-  <LazySchedule />
+  <LazySchedule :hydrate-on-visible="hydrateOnVisible" />
 
-  <NuxtHydrate when-visible>
-    <LazyStudiosSlider />
-  </NuxtHydrate>
+  <LazyStudiosSlider :hydrate-on-visible="hydrateOnVisible" />
 
-  <LazyHowItWorks />
+  <LazyHowItWorks :hydrate-on-visible="hydrateOnVisible" />
 
-  <LazyPricingPackages />
+  <LazyPricingPackages :hydrate-on-visible="hydrateOnVisible" />
 
-  <LazyTrainerSelection />
+  <LazyTrainerSelection :hydrate-on-visible="hydrateOnVisible" />
 
-  <LazyFAQ />
+  <LazyFAQ :hydrate-on-visible="hydrateOnVisible" />
 
-  <LazyContacts />
+  <LazyContacts :hydrate-on-visible="hydrateOnVisible" />
 
-  <NuxtHydrate when-visible>
-    <LazyCallbackForm />
-  </NuxtHydrate>
+  <LazyCallbackForm :hydrate-on-visible="hydrateOnVisible" />
 
-  <NuxtHydrate when-visible>
-    <LazyReviews />
-  </NuxtHydrate>
+  <LazyReviews :hydrate-on-visible="hydrateOnVisible" />
 </template>

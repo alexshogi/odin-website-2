@@ -1,0 +1,22 @@
+# Кэширование для статического хостинга (Netlify / Cloudflare Pages)
+
+/_nuxt/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_ipx/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/img/*
+  Cache-Control: public, max-age=2592000
+
+/video/*
+  Cache-Control: public, max-age=2592000
+
+/docs/*
+  Cache-Control: public, max-age=86400
+
+/gallery/*
+  Cache-Control: public, max-age=2592000

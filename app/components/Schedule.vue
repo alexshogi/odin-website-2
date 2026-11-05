@@ -84,7 +84,7 @@ function handleIframeLoad() {
             :aria-selected="activeStudioId === studio.id"
             @click="selectStudio(studio.id)"
             :class="[
-              'px-5 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg transition-all duration-200 cursor-pointer border',
+              'min-h-11 px-5 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg transition-all duration-200 cursor-pointer border',
               activeStudioId === studio.id
                 ? 'bg-red-600 border-red-600 text-white shadow-md shadow-red-600/20'
                 : 'bg-zinc-50 dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:border-zinc-400 dark:hover:border-zinc-600'
@@ -109,15 +109,14 @@ function handleIframeLoad() {
           <p class="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mt-1 mb-6">
             Нажмите кнопку ниже, чтобы загрузить актуальное расписание студии «{{ activeStudio.label }}» и записаться на тренировку.
           </p>
-          <UButton
-            size="xl"
-            color="primary"
-            class="font-bold rounded-xl shadow-lg cursor-pointer transform hover:scale-105 transition-transform"
-            icon="i-lucide-play"
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 rounded-xl bg-red-600 px-6 py-3 text-base font-bold text-white shadow-lg transition-transform hover:scale-105 hover:bg-red-500 cursor-pointer"
             @click="activateWidget"
           >
+            <UIcon name="i-lucide-play" class="size-5" />
             Показать расписание
-          </UButton>
+          </button>
         </div>
 
         <!-- СОСТОЯНИЕ 2: Скелетон во время реальной загрузки фрейма -->
@@ -125,11 +124,11 @@ function handleIframeLoad() {
           v-if="isLoading" 
           class="absolute inset-0 flex flex-col items-center justify-center p-8 space-y-4 bg-white dark:bg-zinc-900 z-10"
         >
-          <USkeleton class="h-8 w-64 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-md" />
-          <USkeleton class="h-4 w-48 bg-zinc-100 dark:bg-zinc-800/60 animate-pulse rounded-md" />
+          <div class="h-8 w-64 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-md" />
+          <div class="h-4 w-48 bg-zinc-100 dark:bg-zinc-800/60 animate-pulse rounded-md" />
           <div class="w-full max-w-md space-y-2 pt-4">
-            <USkeleton class="h-12 w-full bg-zinc-100 dark:bg-zinc-800/40 rounded-xl" />
-            <USkeleton class="h-12 w-full bg-zinc-100 dark:bg-zinc-800/40 rounded-xl" />
+            <div class="h-12 w-full bg-zinc-100 dark:bg-zinc-800/40 rounded-xl" />
+            <div class="h-12 w-full bg-zinc-100 dark:bg-zinc-800/40 rounded-xl" />
           </div>
         </div>
 
@@ -152,20 +151,18 @@ function handleIframeLoad() {
 
       <!-- Резервный блок -->
       <div class="p-6 bg-zinc-50 dark:bg-zinc-950/60 border-t border-zinc-100 dark:border-zinc-800/60 text-center">
-        <p class="text-xs text-zinc-400 dark:text-zinc-500 mb-3">
+        <p class="text-xs text-zinc-600 dark:text-zinc-500 mb-3">
           Не отображается расписание? Откройте его в отдельной вкладке:
         </p>
-        <UButton
-          :to="fitbaseWidgetUrl"
+        <a
+          :href="fitbaseWidgetUrl"
           target="_blank"
-          size="lg"
-          variant="outline"
-          color="neutral"
-          trailing-icon="i-lucide-external-link"
-          class="rounded-xl! font-bold cursor-pointer"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-xl border border-zinc-300 px-5 py-3 text-sm font-bold text-zinc-800 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-white dark:hover:bg-zinc-800 cursor-pointer"
         >
           Открыть на Fitbase
-        </UButton>
+          <UIcon name="i-lucide-external-link" class="size-4" />
+        </a>
       </div>
 
     </div>

@@ -87,7 +87,7 @@ const selfSteps = ref<Step[]>([
           <button
             @click="activeTab = 'trainer'"
             :class="[
-              'flex-1 sm:flex-none px-6 py-3 text-sm font-bold uppercase tracking-wider rounded-lg transition-all duration-200',
+              'flex-1 sm:flex-none min-h-11 px-2 min-[360px]:px-3 sm:px-6 py-3 text-[13px] min-[360px]:text-sm font-bold uppercase tracking-normal min-[360px]:tracking-wider rounded-lg transition-all duration-200',
               activeTab === 'trainer'
                 ? 'bg-red-600 text-white shadow-lg shadow-red-600/20'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
@@ -98,7 +98,7 @@ const selfSteps = ref<Step[]>([
           <button
             @click="activeTab = 'self'"
             :class="[
-              'flex-1 sm:flex-none px-6 py-3 text-sm font-bold uppercase tracking-wider rounded-lg transition-all duration-200',
+              'flex-1 sm:flex-none min-h-11 px-2 min-[360px]:px-3 sm:px-6 py-3 text-[13px] min-[360px]:text-sm font-bold uppercase tracking-normal min-[360px]:tracking-wider rounded-lg transition-all duration-200',
               activeTab === 'self'
                 ? 'bg-red-600 text-white shadow-lg shadow-red-600/20'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'

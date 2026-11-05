@@ -40,36 +40,30 @@ bun run dev
 
 ## Production
 
-Build the application for production:
+Сайт собирается в статику: страницы, оптимизированные картинки и `/_ipx`-варианты
+генерируются заранее. Это самый быстрый вариант для хостинга.
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+npm run build      # = nuxt generate
 ```
 
-Locally preview production build:
+Готовая папка для деплоя: `.output/public`. Её можно выложить на любой статический
+хостинг (Netlify, Cloudflare Pages, GitHub Pages, nginx).
+
+Кэширование для `_nuxt`, шрифтов и картинок настроено в `public/_headers`
+(поддерживается Netlify и Cloudflare Pages).
+
+Если когда-нибудь понадобится Node-сервер вместо статики:
 
 ```bash
-# npm
+npm run build:server
 npm run preview
+```
 
-# pnpm
-pnpm preview
+Локальный просмотр статической сборки:
 
-# yarn
-yarn preview
-
-# bun
-bun run preview
+```bash
+npx serve .output/public
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

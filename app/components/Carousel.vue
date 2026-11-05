@@ -9,33 +9,28 @@ const slides = [
 
 <template>
   <div class="w-full max-w-(--ui-container) mx-auto overflow-hidden">
-    <!-- 
-      Рендерим карусель напрямую (SSR-friendly).
-      Класс `[&_ul]:flex-nowrap` не дает слайдам переноситься на новую строку, пока грузится JS.
+    <!--
+      Нативная карусель на CSS scroll-snap: не требует JS, гидратации и Embla.
+      Свайпается пальцем на телефоне и колесом/трекпадом на десктопе.
     -->
-    <UCarousel
-      :items="slides"
-      loop
-      class="w-full [&_ul]:flex-nowrap"
-      :ui="{ item: 'basis-2/3 md:basis-1/2 shrink-0 p-2' }"
-    >
-      <template #default="{ item, index }">
+    <div class="flex w-full snap-x snap-mandatory overflow-x-auto no-scrollbar" role="region" aria-label="Преимущества студии">
+      <div
+        v-for="(item, index) in slides"
+        :key="item.imageUrl"
+        class="basis-2/3 md:basis-1/2 shrink-0 snap-start p-2"
+      >
         <div class="w-full select-none">
           <div class="block relative h-64 rounded-2xl overflow-hidden bg-neutral-950 border border-neutral-900 shadow-xl group transition-transform duration-200">
             <div class="absolute inset-0 bg-linear-to-t from-neutral-950/30 via-neutral-900/15 to-transparent z-10" />
 
-            <!-- 
-              NuxtImg сгенерирует правильный тег srcset прямо на сервере.
-              Поскольку это SSR, браузер мгновенно найдет картинку в HTML.
-            -->
-            <NuxtImg 
+            <NuxtImg
               :src="item.imageUrl"
               alt="Слайд Один Фитнес"
-              quality="80"
+              quality="60"
               format="webp"
-              :loading="index <= 1 ? 'eager' : 'lazy'"
-              :fetchpriority="index <= 1 ? 'high' : 'auto'"
-              sizes="xs:350px sm:350px md:600px"
+              :loading="index === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="index === 0 ? 'high' : 'auto'"
+              sizes="xs:230px sm:350px md:600px"
               class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-300"
             />
 
@@ -43,11 +38,22 @@ const slides = [
               <span class="self-start px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded bg-red-600 text-white">
                 {{ item.badge }}
               </span>
-              <h3 v-html="item.titleHtml" class="text-lg font-black uppercase tracking-wide leading-tight bg-neutral-950/60 p-4 rounded-xl backdrop-blur-sm"></h3>
+              <p v-html="item.titleHtml" class="text-lg font-black uppercase tracking-wide leading-tight bg-neutral-950/60 p-4 rounded-xl backdrop-blur-sm"></p>
             </div>
           </div>
         </div>
-      </template>
-    </UCarousel>
+      </div>
+    </div>
   </div>
 </template>
+
+<style scoped>
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+</style>

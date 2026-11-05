@@ -35,10 +35,6 @@ const testimonials = [
   }
 ];
 
-onMounted(async () => {
-  const { register } = await import('swiper/element/bundle')
-  register()
-})
 </script>
 
 <template>
@@ -54,42 +50,35 @@ onMounted(async () => {
           </p>
         </div>
 
-        <!-- Общий рейтинг в стиле Nuxt UI v4 -->
-        <UCard 
-          :ui="{ 
-            root: 'bg-white dark:bg-zinc-900 border shadow-none border-zinc-200 dark:border-zinc-800 rounded-2xl shrink-0 md:max-w-xs',
-            body: 'p-4 flex items-center space-x-4'
-          }"
-        >
-          <div>
-            <div class="flex items-center space-x-0.5 text-red-600">
-              <UIcon v-for="i in 5" :key="i" name="i-lucide-star" class="w-4 h-4 fill-red-600 text-red-600" />
+        <!-- Общий рейтинг -->
+        <div class="shrink-0 rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900 md:max-w-xs">
+          <div class="flex items-center space-x-4">
+            <div>
+              <div class="flex items-center space-x-0.5 text-red-600">
+                <UIcon v-for="i in 5" :key="i" name="i-lucide-star" class="w-4 h-4 fill-red-600 text-red-600" />
+              </div>
+              <p class="text-xs font-bold text-zinc-900 dark:text-white mt-1">5.0 на Яндекс.Картах</p>
             </div>
-            <p class="text-xs font-bold text-zinc-900 dark:text-white mt-1">5.0 на Яндекс.Картах</p>
+            <div class="w-px h-8 bg-zinc-200 dark:bg-zinc-800" />
+            <a
+              href="https://yandex.ru/maps/org/odin/14674183148/reviews/?ll=37.753191%2C55.816612&z=16"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex min-h-11 items-center gap-1 p-0 text-xs font-bold uppercase tracking-wider text-red-600 transition-colors hover:text-red-500"
+            >
+              Читать все
+              <UIcon name="i-lucide-arrow-up-right" class="size-3.5" />
+            </a>
           </div>
-          <div class="w-px h-8 bg-zinc-200 dark:bg-zinc-800" />
-          <UButton 
-            variant="link" 
-            to="https://yandex.ru/maps/org/odin/14674183148/reviews/?ll=37.753191%2C55.816612&z=16" 
-            target="_blank"
-            size="sm"
-            class="p-0 font-bold uppercase tracking-wider text-xs text-red-600 hover:text-red-500"
-            trailing-icon="i-lucide-arrow-up-right"
-          >
-            Читать все
-          </UButton>
-        </UCard>
+        </div>
       </div>
 
-      <!-- Сетка отзывов на компонентах Nuxt UI v4 -->
+      <!-- Сетка отзывов -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <UCard 
-          v-for="(review, index) in testimonials" 
+        <article
+          v-for="(review, index) in testimonials"
           :key="index"
-          :ui="{
-            root: 'border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-2xl transition-all duration-300 hover:border-zinc-300 dark:hover:border-zinc-700 flex flex-col',
-            body: 'p-6 flex-1 flex flex-col justify-between relative overflow-hidden'
-          }"
+          class="flex flex-col rounded-2xl border border-zinc-200 bg-white p-6 transition-all duration-300 hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
         >
           <div class="space-y-4 relative z-10">
             <!-- Верх карточки: звезды и тег направления -->
@@ -97,9 +86,9 @@ onMounted(async () => {
               <div class="flex text-red-600">
                 <UIcon v-for="star in 5" :key="star" name="i-lucide-star" class="w-3.5 h-3.5 fill-red-600 text-red-600" />
               </div>
-              <UBadge color="neutral" variant="subtle" size="sm" class="rounded-md font-medium text-[10px]">
+              <span class="rounded-md bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
                 {{ review.tag }}
-              </UBadge>
+              </span>
             </div>
 
             <!-- Текст отзыва -->
@@ -108,25 +97,28 @@ onMounted(async () => {
             </p>
           </div>
 
-          <!-- Футер карточки с автором (UAvatar) -->
+          <!-- Футер карточки с автором -->
           <div class="flex items-center space-x-3 mt-6 pt-4 border-t border-zinc-100 dark:border-zinc-800/60 relative z-10">
-            <UAvatar 
-              :src="review.avatar" 
+            <NuxtImg
+              :src="review.avatar"
               :alt="review.name"
+              width="40"
+              height="40"
+              format="webp"
               loading="lazy"
-              size="lg"
-              class="rounded-xl object-cover transition-all duration-500 border border-zinc-200 dark:border-zinc-800"
+              decoding="async"
+              class="size-10 rounded-xl object-cover border border-zinc-200 dark:border-zinc-800"
             />
             <div>
-              <h4 class="text-xs font-bold text-zinc-900 dark:text-white">
+              <p class="text-xs font-bold text-zinc-900 dark:text-white">
                 {{ review.name }}
-              </h4>
-              <p class="text-[11px] text-zinc-500 dark:text-zinc-500">
+              </p>
+              <p class="text-[11px] text-zinc-500 dark:text-zinc-400">
                 {{ review.role }}
               </p>
             </div>
           </div>
-        </UCard>
+        </article>
       </div>
   </section>
 </template>

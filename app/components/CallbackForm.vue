@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
-import { z } from 'zod';
-import type { FormSubmitEvent } from '#ui/types';
 import { vMaska } from 'maska/vue';
 
 const contactMethods = [
@@ -42,99 +40,94 @@ const methodLabels: Record<string, string> = {
   max: 'MAX'
 };
 
-const schema = z.object({
-  name: z.string().min(2, 'Имя должно содержать минимум 2 символа'),
-  phone: z.string().refine((val) => val.replace(/\D/g, '').length === 11, {
-    message: 'Введите номер телефона полностью',
-  }),
-  message: z.string().optional(),
-  contactMethod: z.string(),
-  // Передаем объект с ключом message напрямую:
-  agreeOffer: z.literal(true, {
-    message: 'Необходимо согласиться с договором-офертой'
-  }),
-  agreePersonalData: z.literal(true, {
-    message: 'Необходимо согласиться на обработку данных'
-  }),
-});
+interface FormState {
+  name: string;
+  phone: string;
+  message: string;
+  contactMethod: string;
+  agreeOffer: boolean;
+  agreePersonalData: boolean;
+}
 
-type Schema = z.output<typeof schema>;
-
-// Структура данных формы
-const state = reactive<Partial<Schema>>({
+const state = reactive<FormState>({
   name: '',
   phone: '',
   message: '',
   contactMethod: 'call',
-  agreeOffer: undefined,
-  agreePersonalData: undefined,
+  agreeOffer: false,
+  agreePersonalData: false,
 });
 
-const isSubmitting = ref<boolean>(false);
-const formSent = ref<boolean>(false);
-const toast = useToast(); // Используем встроенные уведомления Nuxt UI
+const errors = reactive<Record<string, string>>({});
+const isSubmitting = ref(false);
+const statusMessage = ref('');
+const statusType = ref<'success' | 'error'>('success');
+const formStarted = ref(false);
 
-async function onSubmit(event: FormSubmitEvent<Schema>) {
+const { reachGoal } = useMetrika();
+
+function trackFormStart() {
+  if (formStarted.value) return;
+  formStarted.value = true;
+  reachGoal('form_start');
+}
+
+function validate() {
+  for (const key of Object.keys(errors)) delete errors[key];
+
+  if (state.name.trim().length < 2) {
+    errors.name = 'Имя должно содержать минимум 2 символа';
+  }
+  if (state.phone.replace(/\D/g, '').length !== 11) {
+    errors.phone = 'Введите номер телефона полностью';
+  }
+  if (!state.agreeOffer) {
+    errors.agreeOffer = 'Необходимо согласиться с договором-офертой';
+  }
+  if (!state.agreePersonalData) {
+    errors.agreePersonalData = 'Необходимо согласиться на обработку данных';
+  }
+
+  return Object.keys(errors).length === 0;
+}
+
+async function onSubmit() {
+  statusMessage.value = '';
+
+  if (!validate()) return;
+
   isSubmitting.value = true;
 
-  // Получаем текстовое название выбранного способа связи (или дефолт, если не найдено)
-  const selectedMethodLabel = methodLabels[event.data.contactMethod] || event.data.contactMethod;
-
-  // Формируем объект данных в точности так, как ожидает бэкенд api.odin-fitness.ru
   const feedback = {
-    name: event.data.name,
-    phone: event.data.phone,
-    message: event.data.message || '',
-    contacts: selectedMethodLabel,
+    name: state.name,
+    phone: state.phone,
+    message: state.message || '',
+    contacts: methodLabels[state.contactMethod] || state.contactMethod,
   };
 
   try {
-    // Используем встроенный в Nuxt метод $fetch
-    const result = await $fetch<{ error?: string }>('https://api.odin-fitness.ru/submit', {
+    await $fetch<{ error?: string }>('https://api.odin-fitness.ru/submit', {
       method: 'POST',
-      body: feedback, // $fetch сам добавит заголовки и преобразует в JSON
+      body: feedback,
     });
 
-    console.log('Успех:', result);
-    formSent.value = true; // Переключаем флаг успешной отправки
+    statusType.value = 'success';
+    statusMessage.value = 'Заявка отправлена. Мы свяжемся с вами в ближайшее время.';
+    reachGoal('form_submit', { contact: feedback.contacts });
 
-    // Красивое уведомление об успехе
-    toast.add({
-      title: 'Успешно!',
-      description: 'Заявка отправлена. Мы свяжемся с вами в ближайшее время.',
-      color: 'success',
-      icon: 'i-heroicons-check-circle',
-    });
-
-    // Очищаем поля формы сразу после успешного ответа
     state.name = '';
     state.phone = '';
     state.message = '';
     state.contactMethod = 'call';
-    state.agreeOffer = true;
-    state.agreePersonalData = true;
-
-    // Через 10 секунд сбрасываем статус "форма отправлена", как на старом сайте
-    setTimeout(() => {
-      formSent.value = false;
-    }, 10000);
+    state.agreeOffer = false;
+    state.agreePersonalData = false;
   } catch (error: any) {
-    // Ловим ошибки сети или ошибки со статусом 4xx/5xx от бэкенда
-    console.error('Ошибка:', error.message);
-
-    // Пытаемся достать текст ошибки, отправленный сервером
-    const backendError = error.data?.error || 'Что-то пошло не так при отправке.';
-
-    toast.add({
-      title: 'Ошибка отправки',
-      description: backendError,
-      color: 'error',
-      icon: 'i-heroicons-exclamation-triangle',
-    });
+    statusType.value = 'error';
+    statusMessage.value = error.data?.error || 'Что-то пошло не так при отправке.';
   } finally {
     isSubmitting.value = false;
   }
-};
+}
 </script>
 
 <template>
@@ -147,110 +140,160 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         Обратная связь
       </h2>
 
-      <!-- Передаем схему в UForm. Убираем нативный required у инпутов, чтобы работала плавная валидация -->
-      <UForm :schema="schema" :state="state" @submit="onSubmit" class="space-y-5">
-        
+      <!-- Статус отправки показываем прямо в форме, без тостов и лишнего JS -->
+      <div
+        v-if="statusMessage"
+        role="status"
+        class="mb-5 flex items-start gap-3 rounded-xl border px-4 py-3 text-sm"
+        :class="statusType === 'success'
+          ? 'border-green-200 bg-green-50 text-green-800 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300'
+          : 'border-red-200 bg-red-50 text-red-800 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300'"
+      >
+        <svg
+          v-if="statusType === 'success'"
+          class="mt-0.5 size-5 shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+        <svg
+          v-else
+          class="mt-0.5 size-5 shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 8v4M12 16h.01" />
+        </svg>
+        <span>{{ statusMessage }}</span>
+      </div>
+
+      <form class="space-y-5" novalidate @focusin="trackFormStart" @submit.prevent="onSubmit">
         <!-- Поле: Имя -->
-        <UFormField label="Имя *" name="name">
-          <UInput 
-            v-model="state.name" 
-            placeholder="Ваше имя" 
-            size="lg"
-            class="w-full"
+        <div>
+          <label for="callback-name" class="mb-1.5 block text-sm font-medium">Имя *</label>
+          <input
+            id="callback-name"
+            v-model="state.name"
+            type="text"
+            autocomplete="name"
+            placeholder="Ваше имя"
+            class="w-full rounded-lg border border-zinc-300 bg-white px-4 py-3 text-base text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 dark:border-zinc-700 dark:bg-zinc-950 dark:text-white"
+            :class="errors.name ? 'border-red-500' : ''"
           />
-        </UFormField>
+          <p v-if="errors.name" class="mt-1 text-xs text-red-500">{{ errors.name }}</p>
+        </div>
 
         <!-- Поле: Телефон -->
-        <UFormField label="Телефон *" name="phone">
-          <UInput 
+        <div>
+          <label for="callback-phone" class="mb-1.5 block text-sm font-medium">Телефон *</label>
+          <input
+            id="callback-phone"
             v-maska
-            v-model="state.phone" 
+            v-model="state.phone"
             data-maska="+7 (###) ###-##-##"
             type="tel"
-            placeholder="+7 (999) 999-99-99" 
-            size="lg"
-            class="w-full"
+            inputmode="tel"
+            autocomplete="tel"
+            placeholder="+7 (999) 999-99-99"
+            class="w-full rounded-lg border border-zinc-300 bg-white px-4 py-3 text-base text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 dark:border-zinc-700 dark:bg-zinc-950 dark:text-white"
+            :class="errors.phone ? 'border-red-500' : ''"
           />
-        </UFormField>
+          <p v-if="errors.phone" class="mt-1 text-xs text-red-500">{{ errors.phone }}</p>
+        </div>
 
         <!-- Поле: Сообщение -->
-        <UFormField label="Сообщение" name="message">
-          <UTextarea 
-            v-model="state.message" 
-            placeholder="Ваш комментарий или вопрос" 
-            size="lg"
-            class="w-full"
+        <div>
+          <label for="callback-message" class="mb-1.5 block text-sm font-medium">Сообщение</label>
+          <textarea
+            id="callback-message"
+            v-model="state.message"
+            rows="3"
+            placeholder="Ваш комментарий или вопрос"
+            class="w-full resize-y rounded-lg border border-zinc-300 bg-white px-4 py-3 text-base text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/30 dark:border-zinc-700 dark:bg-zinc-950 dark:text-white"
           />
-        </UFormField>
+        </div>
 
         <!-- Поле: Способ связи -->
-        <UFormField label="Удобный способ связи" name="contactMethod" class="space-y-3">
-          <URadioGroup
-            v-model="state.contactMethod"
-            :items="contactMethods"
-            name="contactMethod"
-            class="w-full mt-1"
-            :ui="{
-              fieldset: 'grid grid-cols-2 sm:grid-cols-3 gap-3 w-full',
-              indicator: 'hidden',
-              container: 'hidden',
-              item: 'w-full odd:last:max-sm:col-span-2',
-              label: 'w-full'
-            }"
-          >
-            <template #label="{ item }">
-              <div 
-                class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border font-bold text-sm transition-all duration-200 cursor-pointer w-full text-center select-none"
-                :class="state.contactMethod === item.value 
-                  ? 'border-red-500 bg-red-500/10 text-red-500 shadow-sm scale-[1.02]' 
-                  : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700'"
-              >
-                <span 
-                  v-html="item.svg" 
-                  :class="state.contactMethod === item.value ? 'text-red-500' : 'text-zinc-400'"
-                  class="shrink-0 flex items-center justify-center"
-                />
-                <span>{{ item.label }}</span>
-              </div>
-            </template>
-          </URadioGroup>
-        </UFormField>
+        <fieldset>
+          <legend class="mb-2 block text-sm font-medium">Удобный способ связи</legend>
+          <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <button
+              v-for="item in contactMethods"
+              :key="item.value"
+              type="button"
+              class="flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold transition-all duration-200 cursor-pointer select-none odd:last:max-sm:col-span-2"
+              :class="state.contactMethod === item.value
+                ? 'border-red-500 bg-red-500/10 text-red-700 shadow-sm scale-[1.02] dark:text-red-400'
+                : 'border-zinc-200 bg-zinc-50 text-zinc-600 hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-400 dark:hover:border-zinc-700'"
+              :aria-pressed="state.contactMethod === item.value"
+              @click="state.contactMethod = item.value"
+            >
+              <span
+                v-html="item.svg"
+                :class="state.contactMethod === item.value ? 'text-red-700 dark:text-red-400' : 'text-zinc-400'"
+                class="flex shrink-0 items-center justify-center"
+              />
+              <span>{{ item.label }}</span>
+            </button>
+          </div>
+        </fieldset>
 
-        <!-- Чекбоксы с красивой выгрузкой индивидуальных ошибок -->
+        <!-- Согласия -->
         <div class="space-y-3 pt-2 text-sm text-zinc-600 dark:text-zinc-400">
-          <UFormField name="agreeOffer">
-            <UCheckbox v-model="state.agreeOffer">
-              <template #label>
-                <span>С текстом <a href="/docs/ОфертаСтудия.pdf" target="_blank" class="underline hover:text-zinc-900 dark:hover:text-white transition-colors">лицензионного договора-оферты</a> согласен</span>
-              </template>
-            </UCheckbox>
-          </UFormField>
+          <div>
+            <label class="flex min-h-11 cursor-pointer items-start gap-2">
+              <input
+                v-model="state.agreeOffer"
+                type="checkbox"
+                class="mt-0.5 size-4 shrink-0 accent-red-600"
+              />
+              <span>С текстом <a href="/docs/ОфертаСтудия.pdf" target="_blank" class="relative underline transition-colors hover:text-zinc-900 dark:hover:text-white before:absolute before:-inset-x-1 before:-inset-y-3 before:content-['']">лицензионного договора-оферты</a> согласен</span>
+            </label>
+            <p v-if="errors.agreeOffer" class="mt-1 text-xs text-red-500">{{ errors.agreeOffer }}</p>
+          </div>
 
-          <UFormField name="agreePersonalData">
-            <UCheckbox v-model="state.agreePersonalData">
-              <template #label>
-                <span>Даю согласие на <a href="/docs/СтудияПолитика.pdf" target="_blank" class="underline hover:text-zinc-900 dark:hover:text-white transition-colors">обработку персональных данных</a></span>
-              </template>
-            </UCheckbox>
-          </UFormField>
+          <div>
+            <label class="flex min-h-11 cursor-pointer items-start gap-2">
+              <input
+                v-model="state.agreePersonalData"
+                type="checkbox"
+                class="mt-0.5 size-4 shrink-0 accent-red-600"
+              />
+              <span>Даю согласие на <a href="/docs/СтудияПолитика.pdf" target="_blank" class="relative underline transition-colors hover:text-zinc-900 dark:hover:text-white before:absolute before:-inset-x-1 before:-inset-y-3 before:content-['']">обработку персональных данных</a></span>
+            </label>
+            <p v-if="errors.agreePersonalData" class="mt-1 text-xs text-red-500">{{ errors.agreePersonalData }}</p>
+          </div>
         </div>
 
         <!-- Кнопка отправки -->
         <div class="pt-2">
-          <UButton 
-            type="submit" 
-            block 
-            size="xl" 
-            :loading="isSubmitting"
-            class="uppercase font-bold tracking-widest bg-zinc-900 dark:bg-white text-white dark:text-black hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors cursor-pointer"
+          <button
+            type="submit"
+            :disabled="isSubmitting"
+            class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-zinc-900 px-6 py-3 text-base font-bold uppercase tracking-widest text-white transition-colors hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-black dark:hover:bg-zinc-200 cursor-pointer"
           >
-            Отправить
-          </UButton>
+            <span
+              v-if="isSubmitting"
+              class="size-5 animate-spin rounded-full border-2 border-current border-t-transparent"
+              aria-hidden="true"
+            />
+            {{ isSubmitting ? 'Отправляем...' : 'Отправить' }}
+          </button>
         </div>
-
-      </UForm>
+      </form>
     </div>
-    <!-- Компонент отображения тостов -->
-    <UNotifications />
   </section>
 </template>

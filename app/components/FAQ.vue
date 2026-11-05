@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import type { AccordionItem } from '@nuxt/ui';
+interface FaqItem {
+  label: string;
+  content: string;
+}
 
-const faqItems: AccordionItem[] = [
+const faqItems: FaqItem[] = [
   {
     label: 'Есть ли полугодовые/годовые абонементы?',
     content: `
@@ -58,24 +61,25 @@ const faqItems: AccordionItem[] = [
       </h2>
     </div>
 
-    <!-- Компонент аккордеона Nuxt UI v4 -->
-    <UAccordion
-      :items="faqItems"
-      multiple
-      trailing-icon="i-lucide-chevron-down"
-      :ui="{
-        root: 'w-full flex flex-col gap-3',
-        item: 'border-none',
-        trigger: 'group w-full flex justify-between items-center py-4 px-4 text-left font-bold border rounded-xl cursor-pointer shadow-none text-base md:text-lg bg-white text-black border-zinc-200 hover:border-red-600 data-[state=open]:bg-black data-[state=open]:text-white data-[state=open]:border-black dark:bg-zinc-900 dark:text-white dark:border-zinc-800 dark:hover:border-red-600 dark:data-[state=open]:bg-white dark:data-[state=open]:text-black dark:data-[state=open]:border-white',
-        trailingIcon: 'w-5 h-5 transform transition-transform duration-200 text-zinc-400 group-data-[state=open]:rotate-180 group-data-[state=open]:text-red-600',
-        body: 'px-4',
-        content: 'pb-4 pt-1 pl-4 text-zinc-600 dark:text-zinc-400 leading-relaxed border-l-2 border-red-600 mt-2'
-      }"
-    >
-      <!-- Слот обработки HTML-контента для всех элементов сразу -->
-      <template #content="{ item }">
-        <div v-html="item.content" />
-      </template>
-    </UAccordion>
+    <!-- Нативный аккордеон на <details>: работает без JS и гидратации -->
+    <div class="flex w-full flex-col gap-3">
+      <details
+        v-for="item in faqItems"
+        :key="item.label"
+        class="group rounded-xl border border-zinc-200 bg-white text-black transition-colors open:border-black open:bg-black open:text-white hover:border-red-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:open:border-white dark:open:bg-white dark:open:text-black dark:hover:border-red-600"
+      >
+        <summary class="flex w-full cursor-pointer list-none items-center justify-between gap-4 px-4 py-4 text-left text-base font-bold md:text-lg [&::-webkit-details-marker]:hidden">
+          <span>{{ item.label }}</span>
+          <UIcon
+            name="i-lucide-chevron-down"
+            class="size-5 shrink-0 text-zinc-400 transition-transform duration-200 group-open:rotate-180 group-open:text-red-600"
+          />
+        </summary>
+        <div
+          class="mt-2 border-l-2 border-red-600 px-4 pb-4 pl-4 pt-1 leading-relaxed text-zinc-600 dark:text-zinc-400"
+          v-html="item.content"
+        />
+      </details>
+    </div>
   </div>
 </template>
