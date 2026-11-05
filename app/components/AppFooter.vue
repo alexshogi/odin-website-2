@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { studios } from '~/data/studios'
+</script>
+
 <template>
   <footer class="bg-zinc-950 text-zinc-400 border-t border-zinc-900 py-12 px-4">
     <div class="max-w-7xl mx-auto">
@@ -58,33 +62,17 @@
             Наши студии
           </h4>
           <ul class="space-y-3 text-xs">
-            <li class="group flex items-start space-x-2">
+            <li v-for="studio in studios" :key="studio.slug" class="group flex items-start space-x-2">
               <UIcon name="i-lucide-map-pin" class="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
-              <div>
-                <p class="text-zinc-300 font-medium">м. Бульвар Рокоссовского</p>
-                <p class="text-zinc-400 group-hover:text-zinc-300 transition-colors">ул. Тагильская, д. 4В</p>
-              </div>
+              <a :href="`/studios/${studio.slug}/`" class="min-h-11 flex flex-col justify-center hover:text-white transition-colors">
+                <span class="text-zinc-300 font-medium">м. {{ studio.metro }}</span>
+                <span class="text-zinc-400 group-hover:text-zinc-300 transition-colors">ОДИН {{ studio.name }}, {{ studio.address }}</span>
+              </a>
             </li>
-            <li class="group flex items-start space-x-2">
-              <UIcon name="i-lucide-map-pin" class="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
-              <div>
-                <p class="text-zinc-300 font-medium">м. Ростокино</p>
-                <p class="text-zinc-400 group-hover:text-zinc-300 transition-colors">ул. Красная Сосна, д. 3A</p>
-              </div>
-            </li>
-            <li class="group flex items-start space-x-2">
-              <UIcon name="i-lucide-map-pin" class="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
-              <div>
-                <p class="text-zinc-300 font-medium">м. Текстильщики</p>
-                <p class="text-zinc-400 group-hover:text-zinc-300 transition-colors">1-й Грайвороновский проезд, 11к2</p>
-              </div>
-            </li>
-            <li class="group flex items-start space-x-2">
-              <UIcon name="i-lucide-map-pin" class="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
-              <div>
-                <p class="text-zinc-300 font-medium">м. Бабушкинская</p>
-                <p class="text-zinc-400 group-hover:text-zinc-300 transition-colors">ул. Коминтерна, д. 15к1</p>
-              </div>
+            <li class="pt-1">
+              <a href="/studios/" class="inline-flex min-h-11 items-center font-bold text-red-500 hover:text-red-400 transition-colors">
+                Все студии
+              </a>
             </li>
           </ul>
         </div>
@@ -123,16 +111,16 @@
             Навигация
           </h4>
           <ul class="grid grid-cols-2 gap-2 text-xs">
-            <li><a href="#studios" class="flex min-h-11 items-center hover:text-white transition-colors">Студии</a></li>
-            <li><a href="#schedule" class="flex min-h-11 items-center hover:text-white transition-colors">Расписание</a></li>
-            <li><a href="#prices" class="flex min-h-11 items-center hover:text-white transition-colors">Цены</a></li>
-            <li><a href="#trainers" class="flex min-h-11 items-center hover:text-white transition-colors">Тренеры</a></li>
-            <li><a href="#howitworks" class="flex min-h-11 items-center hover:text-white transition-colors">Как это работает</a></li>
-            <li><a href="#reviews" class="flex min-h-11 items-center hover:text-white transition-colors">Отзывы</a></li>
-            <li><a href="#contacts" class="flex min-h-11 items-center hover:text-white transition-colors">Контакты</a></li>
+            <li><a href="/#studios" class="flex min-h-11 items-center hover:text-white transition-colors">Студии</a></li>
+            <li><a href="/#schedule" class="flex min-h-11 items-center hover:text-white transition-colors">Расписание</a></li>
+            <li><a href="/#prices" class="flex min-h-11 items-center hover:text-white transition-colors">Цены</a></li>
+            <li><a href="/#trainers" class="flex min-h-11 items-center hover:text-white transition-colors">Тренеры</a></li>
+            <li><a href="/#howitworks" class="flex min-h-11 items-center hover:text-white transition-colors">Как это работает</a></li>
+            <li><a href="/#reviews" class="flex min-h-11 items-center hover:text-white transition-colors">Отзывы</a></li>
+            <li><a href="/#contacts" class="flex min-h-11 items-center hover:text-white transition-colors">Контакты</a></li>
             <li class="col-span-2 mt-2">
               <a
-                href="#schedule"
+                href="/#schedule"
                 class="flex min-h-11 items-center justify-center rounded-xl bg-white px-3 py-2 text-xs font-bold text-black transition-colors hover:bg-red-600 hover:text-white"
               >
                 Записаться онлайн

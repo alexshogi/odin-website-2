@@ -1,7 +1,9 @@
 // https://nuxt.com
 import { visualizer } from 'rollup-plugin-visualizer';
+import { studioSlugs } from './app/data/studios';
 
 const isAnalyze = process.env.ANALYZE === 'true';
+const studioRoutes = ['/studios/', ...studioSlugs.map(slug => `/studios/${slug}/`)];
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -124,6 +126,7 @@ export default defineNuxtConfig({
   },
   sitemap: {
     zeroRuntime: true,
+    urls: studioRoutes,
   },
   site: {
     url: 'odin-fitness.ru',
@@ -139,6 +142,9 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
+    prerender: {
+      routes: studioRoutes,
+    },
     routeRules: {
       '/_nuxt/**': { 
         headers: { 'Cache-Control': 'public, max-age=31536000, immutable' } 
